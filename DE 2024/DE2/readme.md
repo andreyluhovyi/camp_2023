@@ -1,92 +1,92 @@
 # Home task data engineering
 
+## Installing PostgreSQL
 
-## Встановлення PostgreSQL
-
-Нижче наведено кроки для встановлення PostgreSQL на вашому комп'ютері.
+Below are the steps to install PostgreSQL on your computer.
 
 ### Windows
 
-1. Завантажте встановлювач PostgreSQL з [офіційного веб-сайту](https://www.postgresql.org/download/windows/).
+1. Download the PostgreSQL installer from the [official website](https://www.postgresql.org/download/windows/).
 
-2. Відкрийте завантажений встановлювач.
+2. Open the downloaded installer.
 
-3. Оберіть потрібні опції під час встановлення, такі як місце встановлення, порт, пароль адміністратора тощо.
+3. Choose the necessary options during installation, such as installation location, port, administrator password, etc.
 
-4. Завершіть встановлення PostgreSQL.
+4. Complete the PostgreSQL installation.
 
-5. Після встановлення ви можете запустити PostgreSQL через "Start Menu" або "Services". Переконайтеся, що служба PostgreSQL запущена.
+5. After installation, you can start PostgreSQL through the "Start Menu" or "Services". Make sure the PostgreSQL service is running.
 
-6. Для перевірки встановлення відкрийте командний рядок (Command Prompt) і введіть:
+6. To check the installation, open the Command Prompt and type:
 
    ```sh
    psql --version
 
-## База даних для гри Minecraft
+## Database for Minecraft Game
 
-### Структура бази даних
+### Database Structure
 
-1. **Таблиця `minecraft`**:
-   - `player_id`: Унікальний ідентифікатор гравця (INT)
-   - `player_name`: Ім'я гравця (VARCHAR(100))
-   - `game_mode`: Режим гри (VARCHAR(50))
-   - `highest_score`: Найвищий результат гравця (INT)
-   - `total_play_time`: Загальний час гри гравця (TIME)
-   - `favorite_biome`: Улюблений біом гравця (VARCHAR(50))
-   - `number_of_deaths`: Кількість смертей гравця (INT)
-   - `number_of_kills`: Кількість вбивств гравця (INT)
+### Table `minecraft`:
 
-2. **Таблиця `Items`**:
-   - `item_id`: Унікальний ідентифікатор предмету (INT)
-   - `item_name`: Назва предмету (VARCHAR(100))
-   - `item_type`: Тип предмету (VARCHAR(50))
-   - `item_description`: Опис предмету (TEXT)
-   - `item_rarity`: Рідкість предмету (VARCHAR(50))
-   - `item_value`: Вартість предмету (INT)
+- `player_id`: Unique identifier for players (INT)
+- `player_name`: Player's name (VARCHAR(100))
+- `game_mode`: Game mode (VARCHAR(50))
+- `highest_score`: Player's highest score (INT)
+- `total_play_time`: Player's total play time (TIME)
+- `favorite_biome`: Player's favorite biome (VARCHAR(50))
+- `number_of_deaths`: Number of deaths for the player (INT)
+- `number_of_kills`: Number of kills by the player (INT)
 
-3. **Таблиця `Player_Items`**:
-   - `player_id`: Зовнішній ключ до `minecraft(player_id)` (INT)
-   - `item_id`: Зовнішній ключ до `Items(item_id)` (INT)
-   - `quantity`: Кількість предметів у власності гравця (INT)
-   - `item_condition`: Стан предмету (VARCHAR(50))
-   - `item_location`: Розташування предмету (VARCHAR(100))
+### Table `Items`:
 
-### Ключі
+- `item_id`: Unique identifier for items (INT)
+- `item_name`: Name of the item (VARCHAR(100))
+- `item_type`: Type of the item (VARCHAR(50))
+- `item_description`: Description of the item (TEXT)
+- `item_rarity`: Rarity of the item (VARCHAR(50))
+- `item_value`: Value of the item (INT)
 
-- **Основний ключ (Primary Key)**:
+### Table `Player_Items`:
+
+- `player_id`: Foreign key referencing `minecraft(player_id)` (INT)
+- `item_id`: Foreign key referencing `Items(item_id)` (INT)
+- `quantity`: Quantity of the item owned by the player (INT)
+- `item_condition`: Condition of the item (VARCHAR(50))
+- `item_location`: Location of the item (VARCHAR(100))
+
+### Keys
+
+- **Primary Keys**:
   - `minecraft`: `player_id`
   - `Items`: `item_id`
-  
-- **Зовнішній ключ (Foreign Key)**:
-  - `Player_Items`: `player_id` посилається на `minecraft(player_id)`
-  - `Player_Items`: `item_id` посилається на `Items(item_id)`
 
-### Взаємозв'язки
+- **Foreign Keys**:
+  - `Player_Items`: `player_id` references `minecraft(player_id)`
+  - `Player_Items`: `item_id` references `Items(item_id)`
 
-- **Player_Items**: Зв'язок багато-до-багатьох між гравцями (minecraft) та предметами (Items)
+### Relationships
 
-## Завантаження даних в базу даних
+- **Player_Items**: Many-to-many relationship between players (minecraft) and items (Items)
 
-### Опис
+## Loading Data into the Database
 
-Дані були вставлені в три таблиці бази даних:
+Data has been inserted into three tables of the database:
 
-1. **Таблиця `minecraft`**:
-   - Інформація про гравців у грі, включаючи їхні імена, режим гри, результати, час гри, улюблені біоми та статистику.
+- **Table `minecraft`**:
+  - Information about players in the game, including their names, game modes, scores, play time, favorite biomes, and statistics.
 
-2. **Таблиця `Items`**:
-   - Інформація про предмети у грі, такі як їх назви, типи, описи, рідкість та вартість.
+- **Table `Items`**:
+  - Information about items in the game, such as their names, types, descriptions, rarity, and value.
 
-3. **Таблиця `Player_Items`**:
-   - Відображення володіння гравцями предметами у грі, з вказанням кількості, стану та розташування.
+- **Table `Player_Items`**:
+  - Display of players owning items in the game, with quantity, condition, and location specified.
 
-Цей процес вставки даних дозволяє заповнити таблиці бази даних для гри Minecraft з інформацією про гравців, предмети та їхнє володіння.
+This data insertion process populates the database tables for the Minecraft game with information about players, items, and their ownership.
 
-## Створення дампу бази даних
+## Creating a Database Dump
 
-### Крок 4: Створення дампу всієї бази даних
+### Step 4: Creating a dump of the entire database
 
-Для створення дампу всієї бази даних було використано команду `pg_dump`:
+To create a dump of the entire database, the `pg_dump` command was used:
 
 ```sh
 pg_dump -U postgres D:\hometask_db > hometask_db.sql
