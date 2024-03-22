@@ -25,15 +25,46 @@
 ## База даних для гри Minecraft
 
 ### Структура бази даних
- Таблиця minecraft:
- Таблиця Items:
- Таблиця Player_Items:
+
+1. **Таблиця `minecraft`**:
+   - `player_id`: Унікальний ідентифікатор гравця (INT)
+   - `player_name`: Ім'я гравця (VARCHAR(100))
+   - `game_mode`: Режим гри (VARCHAR(50))
+   - `highest_score`: Найвищий результат гравця (INT)
+   - `total_play_time`: Загальний час гри гравця (TIME)
+   - `favorite_biome`: Улюблений біом гравця (VARCHAR(50))
+   - `number_of_deaths`: Кількість смертей гравця (INT)
+   - `number_of_kills`: Кількість вбивств гравця (INT)
+
+2. **Таблиця `Items`**:
+   - `item_id`: Унікальний ідентифікатор предмету (INT)
+   - `item_name`: Назва предмету (VARCHAR(100))
+   - `item_type`: Тип предмету (VARCHAR(50))
+   - `item_description`: Опис предмету (TEXT)
+   - `item_rarity`: Рідкість предмету (VARCHAR(50))
+   - `item_value`: Вартість предмету (INT)
+
+3. **Таблиця `Player_Items`**:
+   - `player_id`: Зовнішній ключ до `minecraft(player_id)` (INT)
+   - `item_id`: Зовнішній ключ до `Items(item_id)` (INT)
+   - `quantity`: Кількість предметів у власності гравця (INT)
+   - `item_condition`: Стан предмету (VARCHAR(50))
+   - `item_location`: Розташування предмету (VARCHAR(100))
+
 ### Ключі
-Основний ключ (Primary Key):
-  minecraft: player_id
-  Items: item_id
-Зовнішній ключ (Foreign Key):
-  Player_Items: player_id посилається на minecraft(player_id)
+
+- **Основний ключ (Primary Key)**:
+  - `minecraft`: `player_id`
+  - `Items`: `item_id`
+  
+- **Зовнішній ключ (Foreign Key)**:
+  - `Player_Items`: `player_id` посилається на `minecraft(player_id)`
+  - `Player_Items`: `item_id` посилається на `Items(item_id)`
+
+### Взаємозв'язки
+
+- **Player_Items**: Зв'язок багато-до-багатьох між гравцями (minecraft) та предметами (Items)
+
   Player_Items: item_id посилається на Items(item_id)
 ### Взаємозв'язки
 Player_Items: Зв'язок багато-до-багатьох між гравцями (minecraft) та предметами (Items)
